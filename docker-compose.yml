@@ -1,0 +1,38 @@
+services:
+  executor:
+    build: ./executor
+    environment:
+      EXECUTOR_ADDR: 0.0.0.0:8082
+    ports:
+      - "8082:8082"
+
+  intelligence:
+    build: ./intelligence
+    environment:
+      AGENTMESH_LLM: mock
+      AGENTMESH_EXECUTOR_URL: http://executor:8082
+    ports:
+      - "8081:8081"
+    depends_on:
+      - executor
+
+  gateway:
+    build: ./gateway
+    environment:
+      AGENTMESH_GATEWAY_ADDR: ":8080"
+      AGENTMESH_TOKEN: dev-token
+      AGENTMESH_INTEL_URLS: http://intelligence:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      - intelligence
+
+  web:
+    build: ./web
+    environment:
+      NEXT_PUBLIC_GATEWAY_WS: ws://localhost:8080/ws
+      NEXT_PUBLIC_TOKEN: dev-token
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway

@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Go
+/gateway/agentmesh-gateway
+*.test
+
+# Rust
+/executor/target/
+
+# Node / Next.js
+node_modules/
+/web/.next/
+/web/out/
+npm-debug.log*
+.pnpm-debug.log*
+
+# Env / editors / OS
+.env
+.vscode/
+.idea/
+.DS_Store
